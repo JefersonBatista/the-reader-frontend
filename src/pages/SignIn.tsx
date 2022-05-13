@@ -2,8 +2,13 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input } from "@mui/material";
 
+import api from "../services/api";
+import useAuth from "../hooks/useAuth";
+
 export default function SignIn() {
   const navigate = useNavigate();
+
+  const { saveAuth } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -23,10 +28,13 @@ export default function SignIn() {
 
     setLoading(true);
 
-    setTimeout(() => {
-      alert("Funcionalidade ainda não implementada");
+    try {
+      const { data } = await api.auth.signIn(formData);
+      saveAuth(data);
+    } catch (error: any) {
+      alert(error.response.data);
       setLoading(false);
-    }, 2000);
+    }
   }
 
   return (

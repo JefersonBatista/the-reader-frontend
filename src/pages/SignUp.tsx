@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Button, Input } from "@mui/material";
+import api from "../services/api";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -22,13 +23,24 @@ export default function SignUp() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     setLoading(true);
+    const { name, email, password, repeatPassword } = formData;
 
-    setTimeout(() => {
-      alert("Funcionalidade ainda não implementada");
+    if (repeatPassword !== password) {
+      alert("Você inseriu senhas diferentes");
+
       setLoading(false);
-    }, 2000);
+      return;
+    }
+
+    try {
+      await api.auth.signUp({ name, email, password });
+
+      navigate("/sign-in");
+    } catch (error: any) {
+      alert(error.response.data);
+      setLoading(false);
+    }
   }
 
   return (
