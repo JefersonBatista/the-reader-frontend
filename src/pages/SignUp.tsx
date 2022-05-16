@@ -1,7 +1,10 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { Button, Input } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
+
 import api from "../services/api";
+import { Logo } from "../components";
+import authStyles from "../styles/authStyles";
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -44,57 +47,66 @@ export default function SignUp() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: "500px" }}>
-      <Input
-        type="text"
-        name="name"
-        placeholder="Nome"
-        value={formData.name}
-        onChange={handleChange}
-        required
-        disabled={loading}
-        fullWidth
-      />
+    <Box sx={authStyles.page}>
+      <Logo />
 
-      <Input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-        disabled={loading}
-        fullWidth
-      />
-      <Input
-        type="password"
-        name="password"
-        placeholder="Senha"
-        value={formData.password}
-        onChange={handleChange}
-        required
-        disabled={loading}
-        fullWidth
-      />
+      <Box component="form" onSubmit={handleSubmit} sx={authStyles.form}>
+        <TextField
+          variant="outlined"
+          label="Nome"
+          type="text"
+          name="name"
+          placeholder="Nome"
+          value={formData.name}
+          onChange={handleChange}
+          disabled={loading}
+          fullWidth
+        />
 
-      <Input
-        type="password"
-        name="repeatPassword"
-        placeholder="Confirme a senha"
-        value={formData.repeatPassword}
-        onChange={handleChange}
-        required
-        disabled={loading}
-        fullWidth
-      />
+        <TextField
+          variant="outlined"
+          label="Email"
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          disabled={loading}
+          fullWidth
+        />
 
-      <div>
-        <Link to={loading ? "#" : "/sign-in"}>Já possuo cadastro</Link>
+        <TextField
+          variant="outlined"
+          label="Senha"
+          type="password"
+          name="password"
+          placeholder="Senha"
+          value={formData.password}
+          onChange={handleChange}
+          disabled={loading}
+          fullWidth
+        />
 
-        <Button variant="contained" type="submit" disabled={loading}>
-          {loading ? "Cadastrando..." : "Cadastrar"}
-        </Button>
-      </div>
-    </form>
+        <TextField
+          variant="outlined"
+          label="Confirme a senha"
+          type="password"
+          name="repeatPassword"
+          placeholder="Confirme a senha"
+          value={formData.repeatPassword}
+          onChange={handleChange}
+          disabled={loading}
+          fullWidth
+        />
+
+        <Box sx={authStyles.formOptions}>
+          <Link to={loading ? "#" : "/sign-in"}>Já possuo cadastro</Link>
+
+          <Button variant="contained" type="submit" disabled={loading}>
+            {loading ? "Cadastrando..." : "Cadastrar"}
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }

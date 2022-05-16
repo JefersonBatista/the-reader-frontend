@@ -1,13 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Button, Input } from "@mui/material";
+import { Link } from "react-router-dom";
+import { Box, Button, TextField } from "@mui/material";
 
 import api from "../services/api";
 import useAuth from "../hooks/useAuth";
+import { Logo } from "../components";
+import authStyles from "../styles/authStyles";
 
 export default function SignIn() {
-  const navigate = useNavigate();
-
   const { saveAuth } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -25,7 +25,6 @@ export default function SignIn() {
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     setLoading(true);
 
     try {
@@ -38,35 +37,42 @@ export default function SignIn() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: "500px" }}>
-      <Input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
-        onChange={handleChange}
-        required
-        disabled={loading}
-        fullWidth
-      />
-      <Input
-        type="password"
-        name="password"
-        placeholder="Senha"
-        value={formData.password}
-        onChange={handleChange}
-        required
-        disabled={loading}
-        fullWidth
-      />
+    <Box sx={authStyles.page}>
+      <Logo />
 
-      <div>
-        <Link to={loading ? "#" : "/sign-up"}>Não possuo cadastro</Link>
+      <Box component="form" onSubmit={handleSubmit} sx={authStyles.form}>
+        <TextField
+          variant="outlined"
+          label="Email"
+          type="email"
+          name="email"
+          placeholder="Email"
+          value={formData.email}
+          onChange={handleChange}
+          disabled={loading}
+          fullWidth
+        />
 
-        <Button variant="contained" type="submit" disabled={loading}>
-          {loading ? "Entrando..." : "Entrar"}
-        </Button>
-      </div>
-    </form>
+        <TextField
+          variant="outlined"
+          label="Senha"
+          type="password"
+          name="password"
+          placeholder="Senha"
+          value={formData.password}
+          onChange={handleChange}
+          disabled={loading}
+          fullWidth
+        />
+
+        <Box sx={authStyles.formOptions}>
+          <Link to={loading ? "#" : "/sign-up"}>Não possuo cadastro</Link>
+
+          <Button variant="contained" type="submit" disabled={loading}>
+            {loading ? "Entrando..." : "Entrar"}
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }
