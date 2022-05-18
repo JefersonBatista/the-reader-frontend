@@ -20,6 +20,14 @@ export default function Main() {
     setReadings(response.data);
   }
 
+  function isUnfinished(reading: Reading) {
+    return !reading.endDate;
+  }
+
+  function isFinished(reading: Reading) {
+    return !!reading.endDate;
+  }
+
   useEffect(() => {
     getReadings();
   }, []);
@@ -42,8 +50,12 @@ export default function Main() {
       </Typography>
 
       <Box sx={mainStyles.section}>
-        {readings.map((reading) => (
-          <ReadingCard key={reading.id} reading={reading} />
+        {readings.filter(isUnfinished).map((reading) => (
+          <ReadingCard
+            key={reading.id}
+            reading={reading}
+            onChange={getReadings}
+          />
         ))}
       </Box>
 
@@ -55,15 +67,19 @@ export default function Main() {
         Comecei a ler um novo livro
       </Button>
 
-      {/* <Typography sx={mainStyles.sectionTitle}>
+      <Typography sx={mainStyles.sectionTitle}>
         Estes são os livros que você já leu:
       </Typography>
 
       <Box sx={mainStyles.section}>
-        {readings.map((reading) => (
-          <ReadingCard key={reading.id} reading={reading} />
+        {readings.filter(isFinished).map((reading) => (
+          <ReadingCard
+            key={reading.id}
+            reading={reading}
+            onChange={getReadings}
+          />
         ))}
-      </Box> */}
+      </Box>
     </Box>
   );
 }

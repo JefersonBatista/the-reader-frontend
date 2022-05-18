@@ -34,11 +34,14 @@ export default function AddReading() {
     setLoading(true);
 
     try {
-      const { numChapters, numPages } = formData;
+      // Treat optional fields
+      const { author, imageUrl, numChapters, numPages } = formData;
       const readingData = {
         ...formData,
-        numChapters: parseInt(`${numChapters}`),
-        numPages: parseInt(`${numPages}`),
+        author: author || undefined,
+        imageUrl: imageUrl || undefined,
+        numChapters: parseInt(`${numChapters}`) || undefined,
+        numPages: parseInt(`${numPages}`) || undefined,
       };
 
       await api.reading.create(auth.token, readingData);

@@ -26,4 +26,8 @@ async function get(token: string) {
   return axiosInstance.get("/readings", configAuth(token));
 }
 
-export default { create, get };
+async function finish(token: string, id: number) {
+  return axiosInstance.patch(`/readings/${id}/finish`, {}, configAuth(token));
+}
+
+export default { create, get, finish };
