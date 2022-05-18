@@ -1,4 +1,6 @@
-const page = {
+import { SxProps } from "@mui/material";
+
+const page: SxProps = {
   minHeight: "100vh",
   width: "100vw",
   display: "flex",
@@ -8,7 +10,7 @@ const page = {
   backgroundColor: "#bde1e7",
 };
 
-const form = {
+const form: SxProps = {
   marginTop: "30px",
   width: "100%",
   maxWidth: "500px",
@@ -17,10 +19,24 @@ const form = {
   gap: "15px",
 };
 
-const formOptions = {
+const formOptions: SxProps = {
   width: "100%",
   display: "flex",
   justifyContent: "space-between",
+  alignItems: "center",
 };
 
-export default { page, form, formOptions };
+const subtitle: SxProps = {
+  marginTop: "30px",
+  fontFamily: "Saira Condensed",
+  fontSize: "24px",
+  color: "#1565C0",
+};
+
+const routerLink: SxProps = {
+  fontFamily: "Saira Condensed",
+  fontSize: "21px",
+  color: "#1565C0",
+};
+
+export default { page, form, formOptions, subtitle, routerLink };

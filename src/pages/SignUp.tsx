@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Box, Button, TextField } from "@mui/material";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Box, Button, TextField, Typography, Link } from "@mui/material";
 
 import api from "../services/api";
-import { Logo } from "../components";
+import { BigLogo } from "../components";
 import authStyles from "../styles/authStyles";
 
 export default function SignUp() {
@@ -48,7 +48,11 @@ export default function SignUp() {
 
   return (
     <Box sx={authStyles.page}>
-      <Logo />
+      <BigLogo />
+
+      <Typography sx={authStyles.subtitle}>
+        Você não possui conta? Cadastre-se.
+      </Typography>
 
       <Box component="form" onSubmit={handleSubmit} sx={authStyles.form}>
         <TextField
@@ -100,7 +104,11 @@ export default function SignUp() {
         />
 
         <Box sx={authStyles.formOptions}>
-          <Link to={loading ? "#" : "/sign-in"}>Já possuo cadastro</Link>
+          <Link component={RouterLink} to={loading ? "#" : "/sign-in"}>
+            <Typography sx={authStyles.routerLink}>
+              Já possuo cadastro
+            </Typography>
+          </Link>
 
           <Button variant="contained" type="submit" disabled={loading}>
             {loading ? "Cadastrando..." : "Cadastrar"}

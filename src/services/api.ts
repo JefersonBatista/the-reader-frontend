@@ -1,13 +1,14 @@
 import axios from "axios";
 
 import auth from "./auth";
+import reading from "./reading";
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: "https://app-the-reader.herokuapp.com",
 });
 
-export { axiosInstance };
+export function configAuth(token: string) {
+  return { headers: { Authorization: `Bearer ${token}` } };
+}
 
-export default {
-  auth,
-};
+export default { auth, reading };
