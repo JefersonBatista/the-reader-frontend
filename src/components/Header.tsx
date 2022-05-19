@@ -1,4 +1,5 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import SignOutIcon from "@mui/icons-material/Logout";
 
 import useAuth from "../hooks/useAuth";
 import headerStyles from "../styles/headerStyles";
@@ -12,9 +13,7 @@ export default function Header() {
       <Box sx={headerStyles.content}>
         <SmallLogo />
         <Typography sx={headerStyles.greetings}>Olá {auth.name}!</Typography>
-        <Button variant="outlined" onClick={removeAuth}>
-          Sair
-        </Button>
+        <SignOutIcon onClick={removeAuth} sx={headerStyles.signOutIcon} />
       </Box>
     </Box>
   );

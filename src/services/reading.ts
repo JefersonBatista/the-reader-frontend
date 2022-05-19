@@ -30,4 +30,12 @@ async function finish(token: string, id: number) {
   return axiosInstance.patch(`/readings/${id}/finish`, {}, configAuth(token));
 }
 
-export default { create, get, finish };
+async function bookmark(token: string, id: number, currentPage: number) {
+  return axiosInstance.patch(
+    `/readings/${id}/bookmark`,
+    { currentPage },
+    configAuth(token)
+  );
+}
+
+export default { create, get, finish, bookmark };

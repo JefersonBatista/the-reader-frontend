@@ -1,12 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Box, Button, Link, TextField, Typography } from "@mui/material";
 
 import api from "../services/api";
-import reading, { ReadingData } from "../services/reading";
+import { ReadingData } from "../services/reading";
 import useAuth from "../hooks/useAuth";
 import { Header } from "../components";
-import authStyles from "../styles/authStyles";
+import addReadingStyles from "../styles/addReadingStyles";
 
 export default function AddReading() {
   const navigate = useNavigate();
@@ -54,14 +54,14 @@ export default function AddReading() {
   }
 
   return (
-    <Box sx={authStyles.page}>
+    <Box sx={addReadingStyles.page}>
       <Header />
 
-      <Typography sx={authStyles.subtitle}>
+      <Typography sx={addReadingStyles.subtitle}>
         O que você começou a ler?
       </Typography>
 
-      <Box component="form" onSubmit={handleSubmit} sx={authStyles.form}>
+      <Box component="form" onSubmit={handleSubmit} sx={addReadingStyles.form}>
         <TextField
           variant="outlined"
           label="Título"
@@ -122,7 +122,15 @@ export default function AddReading() {
           fullWidth
         />
 
-        <Box sx={authStyles.formOptions}>
+        <Box sx={addReadingStyles.formOptions}>
+          <Link
+            component={RouterLink}
+            to="/main"
+            sx={addReadingStyles.routerLink}
+          >
+            Cancelar
+          </Link>
+
           <Button variant="contained" type="submit" disabled={loading}>
             {loading ? "Registrando..." : "Registrar"}
           </Button>

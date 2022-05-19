@@ -34,9 +34,9 @@ export default function Main() {
 
   if (readings === null) {
     return (
-      <Box>
+      <Box sx={mainStyles.main}>
         <Header />
-        <Typography>Carregando...</Typography>
+        <Typography sx={{ alignSelf: "center" }}>Carregando...</Typography>
       </Box>
     );
   }

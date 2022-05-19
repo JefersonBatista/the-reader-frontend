@@ -1,6 +1,7 @@
 import { SxProps } from "@mui/material";
 
 const main: SxProps = {
+  marginTop: "50px",
   display: "flex",
   flexDirection: "column",
 };
@@ -15,6 +16,7 @@ const sectionTitle: SxProps = {
 const section: SxProps = {
   display: "flex",
   alignSelf: "center",
+  gap: "10px",
 };
 
 const button: SxProps = {
