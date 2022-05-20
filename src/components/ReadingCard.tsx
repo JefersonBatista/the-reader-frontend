@@ -23,7 +23,7 @@ export default function ReadingCard({
   const { auth } = useAuth();
 
   const progress = ((reading.currentPage || 0) / (reading.numPages || 1)) * 100;
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(reading.currentPage || 1);
 
   function dateToLocalString(date: string) {
     const localDate = new Date(date);
@@ -49,13 +49,15 @@ export default function ReadingCard({
   return (
     <Box component="article" sx={readingStyles.reading}>
       <Box sx={readingStyles.imageCard}>
-        <CircularProgress
-          variant="determinate"
-          value={progress}
-          size={110}
-          thickness={2}
-          sx={readingStyles.progressBar}
-        />
+        {!reading.endDate && (
+          <CircularProgress
+            variant="determinate"
+            value={progress}
+            size={110}
+            thickness={2}
+            sx={readingStyles.progressBar}
+          />
+        )}
         <Box
           component="img"
           src={reading.imageUrl || defaultBookImg}
@@ -64,16 +66,22 @@ export default function ReadingCard({
         />
       </Box>
 
-      <Typography>{reading.title}</Typography>
-      <Typography sx={readingStyles.author}>{reading.author}</Typography>
-      <Typography>Capítulos: {reading.numChapters}</Typography>
-      <Typography>Páginas: {reading.numPages}</Typography>
-      <Typography>
-        Começou em: {dateToLocalString(reading.startDate)}
+      <Typography sx={readingStyles.field}>{reading.title}</Typography>
+      <Typography sx={{ ...readingStyles.author, ...readingStyles.field }}>
+        {reading.author || "(autor não informado)"}
+      </Typography>
+      <Typography sx={readingStyles.field}>
+        Capítulos: {reading.numChapters || "-"}
+      </Typography>
+      <Typography sx={readingStyles.field}>
+        Páginas: {reading.numPages || "-"}
+      </Typography>
+      <Typography sx={readingStyles.field}>
+        Começou em: {dateToLocalString(reading.startDate) || "-"}
       </Typography>
       {reading.endDate && (
-        <Typography>
-          Finalizada em: {dateToLocalString(reading.endDate)}
+        <Typography sx={readingStyles.field}>
+          Finalizada em: {dateToLocalString(reading.endDate) || "-"}
         </Typography>
       )}
 
@@ -81,11 +89,17 @@ export default function ReadingCard({
         <>
           <Box sx={readingStyles.bookmark}>
             <Input
+              sx={readingStyles.bookmarkInput}
               type="number"
               value={page}
               onChange={({ target }) => setPage(parseInt(target.value))}
             />
-            <Button onClick={() => bookmark(page)}>Marcar página</Button>
+            <Button
+              sx={readingStyles.bookmarkButton}
+              onClick={() => bookmark(page)}
+            >
+              Marcar página
+            </Button>
           </Box>
           <Button onClick={finish}>Finalizar leitura</Button>
         </>

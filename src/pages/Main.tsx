@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import { Reading } from "../services/reading";
-import { Header, ReadingCard } from "../components";
+import { Header, PageSelector, ReadingCard } from "../components";
 import mainStyles from "../styles/mainStyles";
 
 export default function Main() {
@@ -45,6 +45,8 @@ export default function Main() {
     <Box sx={mainStyles.main}>
       <Header />
 
+      <PageSelector page="main" loading={false} />
+
       <Typography sx={mainStyles.sectionTitle}>
         Estes são os livros que você está lendo:
       </Typography>
@@ -64,7 +66,7 @@ export default function Main() {
         variant="contained"
         onClick={() => navigate("/add-reading")}
       >
-        Comecei a ler um novo livro
+        Comecei a ler um livro
       </Button>
 
       <Typography sx={mainStyles.sectionTitle}>

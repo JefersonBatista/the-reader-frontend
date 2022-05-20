@@ -26,11 +26,12 @@ const image: SxProps = {
 const reading: SxProps = {
   width: "200px",
   height: "auto",
+  padding: "5px",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   textAlign: "center",
-  border: "1px solid gray",
+  border: "1px solid #1565C0",
   borderRadius: "5px",
 };
 
@@ -38,4 +39,26 @@ const author: SxProps = {
   color: "gray",
 };
 
-export default { imageCard, progressBar, bookmark, image, reading, author };
+const field: SxProps = {
+  fontSize: "12px",
+};
+
+const bookmarkInput: SxProps = {
+  fontSize: "18px",
+};
+
+const bookmarkButton: SxProps = {
+  fontSize: "10px",
+};
+
+export default {
+  imageCard,
+  progressBar,
+  bookmark,
+  image,
+  reading,
+  author,
+  field,
+  bookmarkInput,
+  bookmarkButton,
+};

@@ -10,9 +10,12 @@ export default function Header() {
 
   return (
     <Box component="header" sx={headerStyles.header}>
+      {/* <Box sx={headerStyles.greetingsBox}> */}
+      <Typography sx={headerStyles.greetings}>Olá {auth.name}!</Typography>
+      {/* </Box> */}
       <Box sx={headerStyles.content}>
         <SmallLogo />
-        <Typography sx={headerStyles.greetings}>Olá {auth.name}!</Typography>
+
         <SignOutIcon onClick={removeAuth} sx={headerStyles.signOutIcon} />
       </Box>
     </Box>

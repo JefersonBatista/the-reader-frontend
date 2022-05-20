@@ -7,8 +7,10 @@ const header: SxProps = {
   left: 0,
   height: "50px",
   width: "100vw",
-  padding: "0 20px",
   backgroundColor: "#bde1e7",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
 };
 
 const content: SxProps = {
@@ -19,22 +21,8 @@ const content: SxProps = {
   alignItems: "center",
 };
 
-/**
- * I have created this style to centralize the greetings
- * independent of the space-between. However, to use it
- * caused to block sign-out button
- */
-const greetingsBox: SxProps = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  display: "flex",
-  width: "100vw",
-  height: "100%",
-};
-
 const greetings: SxProps = {
-  margin: "auto",
+  position: "absolute",
   fontFamily: "Saira Condensed",
   fontSize: "30px",
   color: "#1565C0",
@@ -46,4 +34,4 @@ const signOutIcon: SxProps = {
   cursor: "pointer",
 };
 
-export default { header, content, greetingsBox, greetings, signOutIcon };
+export default { header, content, greetings, signOutIcon };
