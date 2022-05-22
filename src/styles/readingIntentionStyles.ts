@@ -23,6 +23,15 @@ const info: SxProps = {
   alignItems: "center",
 };
 
+const priorityControl: SxProps = {
+  display: "flex",
+  flexDirection: "column",
+};
+
+const priorityButton: SxProps = {
+  fontSize: "30px",
+};
+
 const author: SxProps = {
   color: "gray",
 };
@@ -34,6 +43,8 @@ const field: SxProps = {
 export default {
   image,
   intention,
+  priorityControl,
+  priorityButton,
   author,
   field,
   info,

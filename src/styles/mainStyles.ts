@@ -18,6 +18,8 @@ const sectionTitle: SxProps = {
 const section: SxProps = {
   margin: "20px 0",
   display: "flex",
+  justifyContent: "center",
+  flexWrap: "wrap",
   alignSelf: "center",
   gap: "10px",
 };

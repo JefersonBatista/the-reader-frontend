@@ -1,4 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
+import IncreasePriorityIcon from "@mui/icons-material/KeyboardArrowUp";
+import DecreasePriorityIcon from "@mui/icons-material/KeyboardArrowDown";
 
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
@@ -70,8 +72,14 @@ export default function ReadingIntentionCard({
         </Typography>
       </Box>
 
-      <Button onClick={increasePriority}>Subir</Button>
-      <Button onClick={decreasePriority}>Descer</Button>
+      <Box sx={readingIntentionStyles.priorityControl}>
+        <Button onClick={increasePriority}>
+          <IncreasePriorityIcon sx={readingIntentionStyles.priorityButton} />
+        </Button>
+        <Button onClick={decreasePriority}>
+          <DecreasePriorityIcon sx={readingIntentionStyles.priorityButton} />
+        </Button>
+      </Box>
     </Box>
   );
 }
