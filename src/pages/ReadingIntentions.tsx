@@ -25,6 +25,7 @@ export default function ReadingIntentions() {
   const [intentions, setIntentions] = useState<ReadingIntention[] | null>(null);
   const [addReadingDialog, setAddReadingDialog] = useState(false);
   const [addIntentionDialog, setAddIntentionDialog] = useState(false);
+  const [intentionId, setIntentionId] = useState(0);
   const [readingInitialValue, setReadingInitialValue] =
     useState<ReadingIntentionData>({
       title: "",
@@ -67,6 +68,7 @@ export default function ReadingIntentions() {
             readingIntention={intention}
             onChange={getReadingIntentions}
             openAddReadingDialog={() => {
+              setIntentionId(intention.id);
               setReadingInitialValue({
                 title: intention.title,
                 author: intention.author || "",
@@ -103,6 +105,7 @@ export default function ReadingIntentions() {
             navigate("/main");
           }}
           cancel={() => setAddReadingDialog(false)}
+          readingIntentionId={intentionId}
           initialValue={readingInitialValue}
         />
       </Dialog>

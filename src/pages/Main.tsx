@@ -76,6 +76,7 @@ export default function Main() {
           cancel={() => {
             setAddDialog(false);
           }}
+          readingIntentionId={0}
           initialValue={{ title: "", author: "", imageUrl: "" }}
         />
       </Dialog>

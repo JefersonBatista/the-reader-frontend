@@ -10,10 +10,12 @@ import addReadingStyles from "../styles/addReadingStyles";
 export default function AddReading({
   closeDialog,
   cancel,
+  readingIntentionId,
   initialValue,
 }: {
   closeDialog: () => void;
   cancel: () => void;
+  readingIntentionId: number;
   initialValue: ReadingIntentionData;
 }) {
   const { auth } = useAuth();
@@ -48,6 +50,9 @@ export default function AddReading({
       };
 
       await api.reading.create(auth.token, readingData);
+      if (readingIntentionId) {
+        await api.readingIntention.remove(auth.token, readingIntentionId);
+      }
 
       closeDialog();
     } catch (error: any) {

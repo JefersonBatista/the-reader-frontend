@@ -39,4 +39,11 @@ async function decreasePriority(token: string, id: number) {
   );
 }
 
-export default { create, get, increasePriority, decreasePriority };
+async function remove(token: string, id: number) {
+  return axiosInstance.delete(
+    `/reading-intentions/${id}/remove`,
+    configAuth(token)
+  );
+}
+
+export default { create, get, increasePriority, decreasePriority, remove };
