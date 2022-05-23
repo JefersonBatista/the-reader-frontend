@@ -1,19 +1,17 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Dialog, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import { Reading } from "../services/reading";
-import { Header, PageSelector, ReadingCard } from "../components";
+import { Header, PageSelector, ReadingCard, AddReading } from "../components";
 import mainStyles from "../styles/mainStyles";
 
 export default function Main() {
-  const navigate = useNavigate();
-
   const { auth } = useAuth();
 
   const [readings, setReadings] = useState<Reading[] | null>(null);
+  const [addDialog, setAddDialog] = useState(false);
 
   async function getReadings() {
     const response = await api.reading.get(auth.token);
@@ -64,10 +62,23 @@ export default function Main() {
       <Button
         sx={mainStyles.button}
         variant="contained"
-        onClick={() => navigate("/add-reading")}
+        onClick={() => setAddDialog(true)}
       >
         Comecei a ler um livro
       </Button>
+
+      <Dialog open={addDialog}>
+        <AddReading
+          closeDialog={() => {
+            setAddDialog(false);
+            getReadings();
+          }}
+          cancel={() => {
+            setAddDialog(false);
+          }}
+          initialValue={{ title: "", author: "", imageUrl: "" }}
+        />
+      </Dialog>
 
       <Typography sx={mainStyles.sectionTitle}>
         Estes são os livros que você já leu:

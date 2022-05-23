@@ -13,6 +13,7 @@ const progressBar: SxProps = {
 };
 
 const bookmark: SxProps = {
+  marginBottom: "20px",
   display: "flex",
   gap: "10px",
 };

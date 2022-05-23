@@ -81,7 +81,7 @@ export default function ReadingCard({
       </Typography>
       {reading.endDate && (
         <Typography sx={readingStyles.field}>
-          Finalizada em: {dateToLocalString(reading.endDate) || "-"}
+          Finalizou em: {dateToLocalString(reading.endDate) || "-"}
         </Typography>
       )}
 
@@ -101,7 +101,9 @@ export default function ReadingCard({
               Marcar página
             </Button>
           </Box>
-          <Button onClick={finish}>Finalizar leitura</Button>
+          <Button variant="outlined" onClick={finish}>
+            Finalizar leitura
+          </Button>
         </>
       )}
     </Box>

@@ -4,6 +4,8 @@ import Header from "./Header";
 import ReadingCard from "./ReadingCard";
 import ReadingIntentionCard from "./ReadingIntentionCard";
 import PageSelector from "./PageSelector";
+import AddReading from "./AddReading";
+import AddReadingIntention from "./AddReadingIntention";
 
 export {
   BigLogo,
@@ -12,4 +14,6 @@ export {
   Header,
   ReadingIntentionCard,
   PageSelector,
+  AddReading,
+  AddReadingIntention,
 };

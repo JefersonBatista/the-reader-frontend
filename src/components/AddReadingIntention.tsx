@@ -1,28 +1,24 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 
 import api from "../services/api";
-import { ReadingData } from "../services/reading";
 import { ReadingIntentionData } from "../services/readingIntention";
 import useAuth from "../hooks/useAuth";
-import { Header } from "../components";
 import addReadingStyles from "../styles/addReadingStyles";
 
-export default function AddReading() {
-  // { initialValue }: { initialValue: ReadingIntentionData } = {
-  //   initialValue: { title: "", author: "", imageUrl: "" },
-  // }
-  const navigate = useNavigate();
-
+export default function AddReadingIntention({
+  closeDialog,
+  cancel,
+}: {
+  closeDialog: () => void;
+  cancel: () => void;
+}) {
   const { auth } = useAuth();
 
-  const [formData, setFormData] = useState<ReadingData>({
+  const [formData, setFormData] = useState<ReadingIntentionData>({
     title: "",
     author: "",
     imageUrl: "",
-    numChapters: 0,
-    numPages: 0,
   });
 
   const [loading, setLoading] = useState(false);
@@ -39,18 +35,16 @@ export default function AddReading() {
 
     try {
       // Treat optional fields
-      const { author, imageUrl, numChapters, numPages } = formData;
-      const readingData = {
+      const { author, imageUrl } = formData;
+      const readingIntentionData = {
         ...formData,
         author: author || undefined,
         imageUrl: imageUrl || undefined,
-        numChapters: parseInt(`${numChapters}`) || undefined,
-        numPages: parseInt(`${numPages}`) || undefined,
       };
 
-      await api.reading.create(auth.token, readingData);
+      await api.readingIntention.create(auth.token, readingIntentionData);
 
-      navigate("/main");
+      closeDialog();
     } catch (error: any) {
       alert(error.response.data);
       setLoading(false);
@@ -59,10 +53,8 @@ export default function AddReading() {
 
   return (
     <Box sx={addReadingStyles.page}>
-      <Header />
-
       <Typography sx={addReadingStyles.subtitle}>
-        O que você começou a ler?
+        O que você pretende ler?
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} sx={addReadingStyles.form}>
@@ -102,41 +94,11 @@ export default function AddReading() {
           fullWidth
         />
 
-        <TextField
-          variant="outlined"
-          label="Número de capítulos [opcional, min: 1]"
-          type="number"
-          name="numChapters"
-          placeholder="Número de capítulos"
-          value={formData.numChapters || ""}
-          onChange={handleChange}
-          disabled={loading}
-          fullWidth
-        />
-
-        <TextField
-          variant="outlined"
-          label="Número de páginas [opcional, min: 1]"
-          type="number"
-          name="numPages"
-          placeholder="Número de páginas"
-          value={formData.numPages || ""}
-          onChange={handleChange}
-          disabled={loading}
-          fullWidth
-        />
-
         <Box sx={addReadingStyles.formOptions}>
-          <Link
-            component={RouterLink}
-            to="/main"
-            sx={addReadingStyles.routerLink}
-          >
-            Cancelar
-          </Link>
+          <Button onClick={cancel}>Cancelar</Button>
 
           <Button variant="contained" type="submit" disabled={loading}>
-            {loading ? "Registrando..." : "Registrar"}
+            {loading ? "Adicionando..." : "Adicionar"}
           </Button>
         </Box>
       </Box>

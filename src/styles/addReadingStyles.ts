@@ -1,8 +1,10 @@
 import { SxProps } from "@mui/material";
 
 const page: SxProps = {
-  minHeight: "100vh",
+  height: "auto",
   width: "100vw",
+  padding: "20px 10px",
+  maxWidth: "520px",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
@@ -12,7 +14,7 @@ const page: SxProps = {
 
 const form: SxProps = {
   marginTop: "30px",
-  width: "100%",
+  width: "calc(100% - 20px)",
   maxWidth: "500px",
   display: "flex",
   flexDirection: "column",
@@ -32,10 +34,4 @@ const subtitle: SxProps = {
   color: "#1565C0",
 };
 
-const routerLink: SxProps = {
-  fontFamily: "Saira Condensed",
-  fontSize: "21px",
-  color: "#1565C0",
-};
-
-export default { page, form, formOptions, subtitle, routerLink };
+export default { page, form, formOptions, subtitle };

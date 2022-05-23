@@ -11,9 +11,11 @@ import defaultBookImg from "../assets/85528.png";
 export default function ReadingIntentionCard({
   readingIntention,
   onChange,
+  openAddReadingDialog,
 }: {
   readingIntention: ReadingIntention;
   onChange: () => any;
+  openAddReadingDialog: () => void;
 }) {
   const { auth } = useAuth();
 
@@ -71,6 +73,10 @@ export default function ReadingIntentionCard({
           Adicionada em: {dateToLocalString(readingIntention.date)}
         </Typography>
       </Box>
+
+      <Button variant="outlined" onClick={openAddReadingDialog}>
+        Comecei a ler
+      </Button>
 
       <Box sx={readingIntentionStyles.priorityControl}>
         <Button onClick={increasePriority}>

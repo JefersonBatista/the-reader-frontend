@@ -1,11 +1,20 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Dialog, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
-import { ReadingIntention } from "../services/readingIntention";
-import { Header, PageSelector, ReadingIntentionCard } from "../components";
+import {
+  ReadingIntention,
+  ReadingIntentionData,
+} from "../services/readingIntention";
+import {
+  AddReading,
+  AddReadingIntention,
+  Header,
+  PageSelector,
+  ReadingIntentionCard,
+} from "../components";
 import intentionsPageStyles from "../styles/intentionsPageStyles";
 
 export default function ReadingIntentions() {
@@ -14,6 +23,14 @@ export default function ReadingIntentions() {
   const { auth } = useAuth();
 
   const [intentions, setIntentions] = useState<ReadingIntention[] | null>(null);
+  const [addReadingDialog, setAddReadingDialog] = useState(false);
+  const [addIntentionDialog, setAddIntentionDialog] = useState(false);
+  const [readingInitialValue, setReadingInitialValue] =
+    useState<ReadingIntentionData>({
+      title: "",
+      author: "",
+      imageUrl: "",
+    });
 
   async function getReadingIntentions() {
     const response = await api.readingIntention.get(auth.token);
@@ -49,6 +66,14 @@ export default function ReadingIntentions() {
             key={intention.id}
             readingIntention={intention}
             onChange={getReadingIntentions}
+            openAddReadingDialog={() => {
+              setReadingInitialValue({
+                title: intention.title,
+                author: intention.author || "",
+                imageUrl: intention.imageUrl || "",
+              });
+              setAddReadingDialog(true);
+            }}
           />
         ))}
       </Box>
@@ -56,10 +81,31 @@ export default function ReadingIntentions() {
       <Button
         sx={intentionsPageStyles.button}
         variant="contained"
-        onClick={() => navigate("/add-reading-intention")}
+        onClick={() => setAddIntentionDialog(true)}
       >
         Pretendo ler outro livro
       </Button>
+
+      <Dialog open={addIntentionDialog}>
+        <AddReadingIntention
+          closeDialog={() => {
+            setAddIntentionDialog(false);
+            getReadingIntentions();
+          }}
+          cancel={() => setAddIntentionDialog(false)}
+        />
+      </Dialog>
+
+      <Dialog open={addReadingDialog}>
+        <AddReading
+          closeDialog={() => {
+            setAddReadingDialog(false);
+            navigate("/main");
+          }}
+          cancel={() => setAddReadingDialog(false)}
+          initialValue={readingInitialValue}
+        />
+      </Dialog>
     </Box>
   );
 }
