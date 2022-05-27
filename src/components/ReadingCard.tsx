@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Box,
   Button,
@@ -20,6 +21,8 @@ export default function ReadingCard({
   reading: Reading;
   onChange: () => any;
 }) {
+  const navigate = useNavigate();
+
   const { auth } = useAuth();
 
   const progress = ((reading.currentPage || 0) / (reading.numPages || 1)) * 100;
@@ -80,9 +83,17 @@ export default function ReadingCard({
         Começou em: {dateToLocalString(reading.startDate) || "-"}
       </Typography>
       {reading.endDate && (
-        <Typography sx={readingStyles.field}>
-          Finalizou em: {dateToLocalString(reading.endDate) || "-"}
-        </Typography>
+        <Box>
+          <Typography sx={readingStyles.field}>
+            Finalizou em: {dateToLocalString(reading.endDate) || "-"}
+          </Typography>
+          <Button
+            variant="outlined"
+            onClick={() => navigate(`/readings/${reading.id}`)}
+          >
+            Ir para anotações
+          </Button>
+        </Box>
       )}
 
       {!reading.endDate && (
@@ -101,6 +112,12 @@ export default function ReadingCard({
               Marcar página
             </Button>
           </Box>
+          <Button
+            variant="outlined"
+            onClick={() => navigate(`/readings/${reading.id}`)}
+          >
+            Ir para anotações
+          </Button>
           <Button variant="outlined" onClick={finish}>
             Finalizar leitura
           </Button>

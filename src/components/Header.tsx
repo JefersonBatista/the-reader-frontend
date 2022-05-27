@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 import SignOutIcon from "@mui/icons-material/Logout";
 
@@ -6,6 +7,8 @@ import headerStyles from "../styles/headerStyles";
 import SmallLogo from "./SmallLogo";
 
 export default function Header() {
+  const navigate = useNavigate();
+
   const { auth, removeAuth } = useAuth();
 
   return (
@@ -15,7 +18,9 @@ export default function Header() {
       </Typography>
 
       <Box sx={headerStyles.content}>
-        <SmallLogo />
+        <Box onClick={() => navigate("/main")}>
+          <SmallLogo />
+        </Box>
         <SignOutIcon onClick={removeAuth} sx={headerStyles.signOutIcon} />
       </Box>
     </Box>

@@ -46,7 +46,9 @@ export default function Main() {
       <PageSelector page="main" loading={false} />
 
       <Typography sx={mainStyles.sectionTitle}>
-        Estes são os livros que você está lendo:
+        {readings.filter(isUnfinished).length === 0
+          ? "Você não está lendo nenhum livro no momento?"
+          : "Estes são os livros que você está lendo:"}
       </Typography>
 
       <Box sx={mainStyles.section}>
@@ -82,7 +84,9 @@ export default function Main() {
       </Dialog>
 
       <Typography sx={mainStyles.sectionTitle}>
-        Estes são os livros que você já leu:
+        {readings.filter(isFinished).length === 0
+          ? "Você ainda não terminou nenhum livro."
+          : "Estes são os livros que você já leu:"}
       </Typography>
 
       <Box sx={mainStyles.section}>

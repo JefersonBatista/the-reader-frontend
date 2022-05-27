@@ -58,7 +58,9 @@ export default function ReadingIntentions() {
       <PageSelector page="intentions" loading={false} />
 
       <Typography sx={intentionsPageStyles.sectionTitle}>
-        Estes são os livros que você pretende ler:
+        {intentions.length === 0
+          ? "Sua lista de livros que quer ler está vazia."
+          : "Estes são os livros que você pretende ler:"}
       </Typography>
 
       <Box sx={intentionsPageStyles.section}>

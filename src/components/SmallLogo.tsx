@@ -8,6 +8,8 @@ export default function SmallLogo() {
         fontSize: "30px",
         color: "#ff3c00",
         ["@media (max-width:450px)"]: { visibility: "hidden" },
+
+        cursor: "pointer",
       }}
     >
       The Reader
