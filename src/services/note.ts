@@ -4,9 +4,9 @@ export interface Note {
   id: number;
   userId: number;
   readingId: number;
-  chapter: number | null;
-  page: number | null;
-  placeInText: string | null;
+  chapter?: number;
+  page?: number;
+  placeInText?: string;
   content: string;
   time: string;
 }

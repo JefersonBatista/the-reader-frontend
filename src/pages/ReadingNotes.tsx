@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Dialog, Typography } from "@mui/material";
 
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import { Note } from "../services/note";
 import { Header } from "../components";
+import AddReadingNote from "../components/AddReadingNote";
+import { Reading } from "../services/reading";
 
 export default function ReadingNotes() {
   const { auth } = useAuth();
   const params = useParams() as { id: string };
   const readingId = parseInt(params.id);
 
+  const [reading, setReading] = useState<Reading | undefined>(undefined);
   const [notes, setNotes] = useState<Note[] | null>(null);
+  const [addNoteDialog, setAddNoteDialog] = useState(false);
+
+  async function getReading() {
+    const response = await api.reading.get(auth.token);
+    const readings = response.data as Reading[];
+    setReading(readings.find((reading) => reading.id === readingId));
+  }
 
   async function getNotes() {
     const response = await api.note.get(auth.token, readingId);
@@ -20,10 +30,11 @@ export default function ReadingNotes() {
   }
 
   useEffect(() => {
+    getReading();
     getNotes();
   }, []);
 
-  if (notes === null) {
+  if (notes === null || reading === undefined) {
     return (
       <Box>
         <Header />
@@ -37,12 +48,42 @@ export default function ReadingNotes() {
   return (
     <Box>
       <Header />
-      <Box sx={{ marginTop: "70px" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+          marginTop: "70px",
+        }}
+      >
         <Typography>Esta página ainda está em início de construção.</Typography>
-        <Typography>
-          As anotações da leitura de ID {readingId} deveriam aparecer aqui.
-        </Typography>
-        <Typography>Clique na logo para voltar.</Typography>
+        <Typography>Anotações do livro '{reading.title}'.</Typography>
+        {notes.length === 0
+          ? "Você ainda não fez nenhuma anotação para essa leitura"
+          : notes.map((note) => (
+              <Typography key={note.id}>
+                Capítulo {note.chapter || "-"}, pág. {note.page || "-"}
+                <br />
+                {note.placeInText || "(sem local no texto)"}
+                <br />
+                {note.content}
+              </Typography>
+            ))}
+        <Button variant="contained" onClick={() => setAddNoteDialog(true)}>
+          Adicionar anotação
+        </Button>
+        <Typography>Info: clique na logo para voltar.</Typography>
+
+        <Dialog open={addNoteDialog}>
+          <AddReadingNote
+            readingId={readingId}
+            closeDialog={() => {
+              setAddNoteDialog(false);
+              getNotes();
+            }}
+            cancel={() => setAddNoteDialog(false)}
+          />
+        </Dialog>
       </Box>
     </Box>
   );

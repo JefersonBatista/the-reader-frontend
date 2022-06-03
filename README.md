@@ -2,7 +2,7 @@
 
 The front-end of a web app to manager books you are reading or you intend to read. This app runs upon its back-end, which is at https://github.com/JefersonBatista/the-reader-backend.
 
-Try it out now at https://the-reader-frontend.vercel.app.
+Try it out now at https://the-reader.vercel.app.
 
 ## About
 
