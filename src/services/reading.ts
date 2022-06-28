@@ -22,6 +22,10 @@ async function create(token: string, data: ReadingData) {
   return axiosInstance.post("/readings", data, configAuth(token));
 }
 
+async function getById(token: string, id: number) {
+  return axiosInstance.get(`/readings/${id}`, configAuth(token));
+}
+
 async function get(token: string) {
   return axiosInstance.get("/readings", configAuth(token));
 }
@@ -38,4 +42,4 @@ async function bookmark(token: string, id: number, currentPage: number) {
   );
 }
 
-export default { create, get, finish, bookmark };
+export default { create, getById, get, finish, bookmark };

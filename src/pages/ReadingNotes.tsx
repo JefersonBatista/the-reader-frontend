@@ -19,9 +19,9 @@ export default function ReadingNotes() {
   const [addNoteDialog, setAddNoteDialog] = useState(false);
 
   async function getReading() {
-    const response = await api.reading.get(auth.token);
-    const readings = response.data as Reading[];
-    setReading(readings.find((reading) => reading.id === readingId));
+    const response = await api.reading.getById(auth.token, readingId);
+    const reading = response.data as Reading;
+    setReading(reading);
   }
 
   async function getNotes() {
