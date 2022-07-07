@@ -1,8 +1,9 @@
-import { Box, Button, Dialog, Typography } from "@mui/material";
+import { Box, Button, Dialog, Input, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
+import { searchBook } from "../services/google-books-api";
 import { Reading } from "../services/reading";
 import { Header, PageSelector, ReadingCard, AddReading } from "../components";
 import mainStyles from "../styles/mainStyles";
@@ -12,6 +13,7 @@ export default function Main() {
 
   const [readings, setReadings] = useState<Reading[] | null>(null);
   const [addDialog, setAddDialog] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   async function getReadings() {
     const response = await api.reading.get(auth.token);
@@ -24,6 +26,18 @@ export default function Main() {
 
   function isFinished(reading: Reading) {
     return !!reading.endDate;
+  }
+
+  async function printBookSearchResult() {
+    const response = await searchBook(searchQuery);
+    const books = response.data.items
+      .slice(0, 5)
+      .map((item: any) => item.volumeInfo);
+    const booksSummary = books.map((book: any) => {
+      const { title, authors, pageCount, imageLinks } = book;
+      return { title, authors, pageCount, imageLinks };
+    });
+    console.log(booksSummary);
   }
 
   useEffect(() => {
@@ -67,6 +81,14 @@ export default function Main() {
         onClick={() => setAddDialog(true)}
       >
         Comecei a ler um livro
+      </Button>
+
+      <Input
+        value={searchQuery}
+        onChange={({ target }) => setSearchQuery(target.value)}
+      />
+      <Button onClick={printBookSearchResult}>
+        Pesquisar na Google Books API
       </Button>
 
       <Dialog open={addDialog}>
