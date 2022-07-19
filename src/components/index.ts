@@ -6,6 +6,7 @@ import ReadingIntentionCard from "./ReadingIntentionCard";
 import PageSelector from "./PageSelector";
 import AddReading from "./AddReading";
 import AddReadingIntention from "./AddReadingIntention";
+import BookCard from "./BookCard";
 
 export {
   BigLogo,
@@ -16,4 +17,5 @@ export {
   PageSelector,
   AddReading,
   AddReadingIntention,
+  BookCard,
 };

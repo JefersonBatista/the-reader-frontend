@@ -1,7 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { AuthProvider } from "./contexts/AuthContext";
-import { SignIn, SignUp, Main, ReadingIntentions, ReadingNotes } from "./pages";
+import {
+  SignIn,
+  SignUp,
+  Main,
+  ReadingIntentions,
+  ReadingNotes,
+  SearchInGoogleAPI,
+} from "./pages";
 
 export default function App() {
   return (
@@ -13,6 +20,7 @@ export default function App() {
           <Route path="/main" element={<Main />} />
           <Route path="/intentions" element={<ReadingIntentions />} />
           <Route path="/readings/:id" element={<ReadingNotes />} />
+          <Route path="/search-book" element={<SearchInGoogleAPI />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
