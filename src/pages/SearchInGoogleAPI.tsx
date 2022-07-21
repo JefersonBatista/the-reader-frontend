@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Box, Dialog, Typography } from "@mui/material";
 
 import { Book, searchBook } from "../services/google-books-api";
 import mainStyles from "../styles/mainStyles";
-import { Header, BookCard } from "../components";
+import { Header, BookCard, AddReading } from "../components";
 
 export default function SearchInGoogleAPI() {
+  const navigate = useNavigate();
+
   const [searchParams] = useSearchParams();
   const [foundBooks, setFoundBooks] = useState<Book[] | null>(null);
+  const [addDialog, setAddDialog] = useState(false);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   async function getBooks() {
     const searchQuery = searchParams.get("search-query");
@@ -52,9 +56,30 @@ export default function SearchInGoogleAPI() {
 
       <Box sx={mainStyles.section}>
         {foundBooks.map((book, index) => (
-          <BookCard key={index} book={book} />
+          <BookCard
+            key={index}
+            book={book}
+            startReading={() => {
+              setSelectedBook(book);
+              setAddDialog(true);
+            }}
+          />
         ))}
       </Box>
+
+      <Dialog open={addDialog}>
+        <AddReading
+          closeDialog={() => {
+            setAddDialog(false);
+            navigate("/main");
+          }}
+          cancel={() => {
+            setAddDialog(false);
+          }}
+          readingIntentionId={0}
+          initialValue={{ ...selectedBook } as Book}
+        />
+      </Dialog>
     </Box>
   );
 }

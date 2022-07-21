@@ -16,14 +16,14 @@ export default function AddReading({
   closeDialog: () => void;
   cancel: () => void;
   readingIntentionId: number;
-  initialValue: ReadingIntentionData;
+  initialValue: ReadingData;
 }) {
   const { auth } = useAuth();
 
   const [formData, setFormData] = useState<ReadingData>({
     ...initialValue,
-    numChapters: 0,
-    numPages: 0,
+    numChapters: initialValue.numChapters || 0,
+    numPages: initialValue.numPages || 0,
   });
 
   const [loading, setLoading] = useState(false);

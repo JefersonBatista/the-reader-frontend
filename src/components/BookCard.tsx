@@ -1,10 +1,16 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import { Book } from "../services/google-books-api";
 import readingStyles from "../styles/readingStyles";
 import defaultBookImg from "../assets/85528.png";
 
-export default function BookCard({ book }: { book: Book }) {
+export default function BookCard({
+  book,
+  startReading,
+}: {
+  book: Book;
+  startReading: () => void;
+}) {
   return (
     <Box component="article" sx={readingStyles.reading}>
       <Box sx={readingStyles.imageCard}>
@@ -23,6 +29,10 @@ export default function BookCard({ book }: { book: Book }) {
       <Typography sx={readingStyles.field}>
         Páginas: {book.numPages || "-"}
       </Typography>
+
+      <Button variant="outlined" onClick={startReading}>
+        Comecei a ler
+      </Button>
     </Box>
   );
 }
