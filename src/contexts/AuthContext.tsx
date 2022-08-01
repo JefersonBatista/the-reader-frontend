@@ -36,13 +36,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(authLocalStorageKey);
   }
 
-  // useEffect(() => {
-  //   if (auth.token) {
-  //     navigate("/main");
-  //   } else {
-  //     navigate("/sign-in");
-  //   }
-  // }, [auth]);
+  useEffect(() => {
+    if (auth.token) {
+      navigate("/main");
+    } else {
+      navigate("/sign-in");
+    }
+  }, [auth]);
 
   return (
     <AuthContext.Provider value={{ auth, saveAuth, removeAuth }}>
