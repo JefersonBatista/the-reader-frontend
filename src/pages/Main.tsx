@@ -1,5 +1,6 @@
-import { Box, Button, Dialog, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Box, Button, Dialog, Typography } from "@mui/material";
 
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
@@ -8,6 +9,8 @@ import { Header, PageSelector, ReadingCard, AddReading } from "../components";
 import mainStyles from "../styles/mainStyles";
 
 export default function Main() {
+  const navigate = useNavigate();
+
   const { auth } = useAuth();
 
   const [readings, setReadings] = useState<Reading[] | null>(null);
@@ -67,6 +70,14 @@ export default function Main() {
         onClick={() => setAddDialog(true)}
       >
         Comecei a ler um livro
+      </Button>
+
+      <Button
+        sx={mainStyles.button}
+        variant="contained"
+        onClick={() => navigate("/search-book")}
+      >
+        Buscar livro na API da Google
       </Button>
 
       <Dialog open={addDialog}>
