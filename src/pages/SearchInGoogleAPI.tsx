@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Dialog, Input, Typography } from "@mui/material";
 
@@ -13,8 +13,11 @@ export default function SearchInGoogleAPI() {
   const [foundBooks, setFoundBooks] = useState<Book[]>([]);
   const [addDialog, setAddDialog] = useState(false);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const [loading, setLoading] = useState(false);
 
   async function getBooks() {
+    setLoading(true);
+
     if (!searchQuery) {
       return;
     }
@@ -31,10 +34,18 @@ export default function SearchInGoogleAPI() {
         return { title, author, numPages: pageCount, imageUrl };
       });
     setFoundBooks(books);
+
+    setLoading(false);
   }
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setSearchQuery(e.target.value);
+  }
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    getBooks();
   }
 
   useEffect(() => {
@@ -46,6 +57,8 @@ export default function SearchInGoogleAPI() {
       <Header />
 
       <Box
+        component="form"
+        onSubmit={handleSubmit}
         sx={{
           display: "flex",
           justifyContent: "center",
@@ -58,13 +71,15 @@ export default function SearchInGoogleAPI() {
           value={searchQuery}
           onChange={handleChange}
         />
-        <Button variant="contained" onClick={getBooks}>
+        <Button type="submit" variant="contained">
           Pesquisar
         </Button>
       </Box>
 
       <Typography sx={mainStyles.sectionTitle}>
-        {foundBooks.length === 0
+        {loading
+          ? "Carregando..."
+          : foundBooks.length === 0
           ? "Sua busca não retornou nenhum resultado :("
           : "Qual desses livros você começou a ler?"}
       </Typography>
