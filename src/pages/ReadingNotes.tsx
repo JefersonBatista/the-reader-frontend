@@ -5,8 +5,7 @@ import { Box, Button, Dialog, Typography } from "@mui/material";
 import useAuth from "../hooks/useAuth";
 import api from "../services/api";
 import { Note } from "../services/note";
-import { Header } from "../components";
-import AddReadingNote from "../components/AddReadingNote";
+import { Header, ReadingNoteCard, AddReadingNote } from "../components";
 import { Reading } from "../services/reading";
 
 export default function ReadingNotes() {
@@ -61,13 +60,7 @@ export default function ReadingNotes() {
         {notes.length === 0
           ? "Você ainda não fez nenhuma anotação para essa leitura"
           : notes.map((note) => (
-              <Typography key={note.id}>
-                Capítulo {note.chapter || "-"}, pág. {note.page || "-"}
-                <br />
-                {note.placeInText || "(sem local no texto)"}
-                <br />
-                {note.content}
-              </Typography>
+              <ReadingNoteCard key={note.id} note={note}></ReadingNoteCard>
             ))}
         <Button variant="contained" onClick={() => setAddNoteDialog(true)}>
           Adicionar anotação
