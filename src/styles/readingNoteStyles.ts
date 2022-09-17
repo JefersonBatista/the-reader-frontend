@@ -4,6 +4,7 @@ const note: SxProps = {
   width: "300px",
   height: "auto",
   padding: "5px",
+  alignSelf: "center",
   display: "flex",
   gap: "10px",
   alignItems: "center",

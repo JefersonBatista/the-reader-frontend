@@ -7,6 +7,7 @@ import api from "../services/api";
 import { Note } from "../services/note";
 import { Header, ReadingNoteCard, AddReadingNote } from "../components";
 import { Reading } from "../services/reading";
+import mainStyles from "../styles/mainStyles";
 
 export default function ReadingNotes() {
   const { auth } = useAuth();
@@ -35,17 +36,15 @@ export default function ReadingNotes() {
 
   if (notes === null || reading === undefined) {
     return (
-      <Box>
+      <Box sx={mainStyles.main}>
         <Header />
-        <Typography sx={{ alignSelf: "center", marginTop: "70px" }}>
-          Carregando...
-        </Typography>
+        <Typography sx={{ alignSelf: "center" }}>Carregando...</Typography>
       </Box>
     );
   }
 
   return (
-    <Box>
+    <Box sx={mainStyles.main}>
       <Header />
       <Box
         sx={{
@@ -55,17 +54,21 @@ export default function ReadingNotes() {
           marginTop: "70px",
         }}
       >
-        <Typography>Esta página ainda está em início de construção.</Typography>
-        <Typography>Anotações do livro '{reading.title}'.</Typography>
+        <Typography sx={mainStyles.sectionTitle}>
+          Anotações do livro '{reading.title}'.
+        </Typography>
         {notes.length === 0
           ? "Você ainda não fez nenhuma anotação para essa leitura"
           : notes.map((note) => (
               <ReadingNoteCard key={note.id} note={note}></ReadingNoteCard>
             ))}
-        <Button variant="contained" onClick={() => setAddNoteDialog(true)}>
+        <Button
+          sx={mainStyles.button}
+          variant="contained"
+          onClick={() => setAddNoteDialog(true)}
+        >
           Adicionar anotação
         </Button>
-        <Typography>Info: clique na logo para voltar.</Typography>
 
         <Dialog open={addNoteDialog}>
           <AddReadingNote
