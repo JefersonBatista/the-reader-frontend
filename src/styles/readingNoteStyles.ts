@@ -1,7 +1,8 @@
 import { SxProps } from "@mui/material";
 
 const note: SxProps = {
-  width: "300px",
+  width: "100%",
+  maxWidth: "600px",
   height: "auto",
   padding: "5px",
   alignSelf: "center",
