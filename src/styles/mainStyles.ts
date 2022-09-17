@@ -10,6 +10,7 @@ const main: SxProps = {
 
 const sectionTitle: SxProps = {
   alignSelf: "center",
+  textAlign: "center",
   fontFamily: "Saira Condensed",
   fontSize: "22px",
   color: "#1565C0",
